@@ -90,6 +90,9 @@ Flag executable
 Flag pcre-light
   Description:       Use the pcre-light library instead of regex-pcre-builtin
   Default:           False
+Flag lucid
+  Description:       Use the lucid library instead of blaze-html
+  Default:           False
 
 Source-repository head
   type:          git
@@ -105,7 +108,12 @@ Library
     cpp-options:     -D_PCRE_LIGHT
   else
     Build-depends:   regex-pcre-builtin >= 0.94.4.8.8.35
-  Build-Depends:     parsec, mtl, blaze-html >= 0.4.2 && < 0.8, utf8-string
+  if flag(lucid)
+    Build-Depends:   lucid >= 2.5 && < 2.6
+    cpp-options:     -D_LUCID
+  else
+    Build-Depends:   blaze-html >= 0.4.2 && < 0.8
+  Build-Depends:     parsec, mtl, utf8-string
   Exposed-Modules:   Text.Highlighting.Kate
                      Text.Highlighting.Kate.Syntax
                      Text.Highlighting.Kate.Types
@@ -241,7 +249,12 @@ Library
 
 Executable Highlight
   Main-Is:          Highlight.hs
-  Build-Depends:    base, containers, blaze-html >= 0.4.2 && < 0.8, filepath,
+  if flag(lucid)
+    Build-Depends:  lucid >= 2.5 && < 2.6
+    cpp-options:    -D_LUCID
+  else
+    Build-Depends:  blaze-html >= 0.4.2 && < 0.8
+  Build-Depends:    base, containers, filepath,
                     highlighting-kate
   Hs-Source-Dirs:   extra
   Default-Language:    Haskell98
@@ -262,6 +275,11 @@ test-suite test-highlighting-kate
   Type:           exitcode-stdio-1.0
   Main-Is:        test-highlighting-kate.hs
   Hs-Source-Dirs: tests
+  if flag(lucid)
+    Build-Depends:   lucid >= 2.5 && < 2.6
+    cpp-options:     -D_LUCID
+  else
+    Build-Depends:   blaze-html >= 0.4.2 && < 0.8
   build-depends:  base >= 4, directory, highlighting-kate, filepath,
-                  process, Diff, containers, blaze-html >= 0.4.2 && < 0.8
+                  process, Diff, containers
   default-language: Haskell98
