@@ -11,11 +11,23 @@ import System.IO
 import Data.Monoid (mempty)
 import Text.Printf
 import Text.Highlighting.Kate
-import Data.Text.Lazy (Text, pack, unpack)
 import Data.Algorithm.Diff
 import Control.Applicative
 import System.Environment (getArgs)
+#ifdef _LUCID
 import Lucid
+import Data.Text.Lazy (Text, pack, unpack)
+#else
+#if MIN_VERSION_blaze_html(0,5,0)
+import Text.Blaze.Html
+import Text.Blaze.Html.Renderer.String
+#else
+import Text.Blaze
+import Text.Blaze.Renderer.String
+#endif
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
+#endif
 
 data TestResult = Pass | Fail | Error
                   deriving (Eq, Show)
@@ -58,12 +70,22 @@ runTest regen inpFile = do
        printDiff expectedString actual
        return Fail
 
+#ifdef _LUCID
 formatHtml toks =
   unpack $ renderText $ head_ (metadata >> css) >> body_ (fragment)
   where css = style_ [ type_ "text/css"] $ pack $ styleToCss pygments
         fragment = formatHtmlBlock opts toks
         metadata = meta_ [ httpEquiv_ "Content-Type", content_ "text/html; charset=UTF-8" ]
         opts = defaultFormatOpts{ titleAttributes = True }
+#else
+formatHtml toks =
+  renderHtml $ H.head (metadata >> css) >> H.body (toHtml fragment)
+  where css = H.style ! A.type_ "text/css" $ toHtml $ styleToCss pygments
+        fragment = formatHtmlBlock opts toks
+        metadata = H.meta ! A.httpEquiv "Content-Type"
+                              ! A.content "text/html; charset=UTF-8"
+        opts = defaultFormatOpts{ titleAttributes = True }
+#endif
 
 vividize :: Diff String -> String
 vividize (Both s _) = "  " ++ s

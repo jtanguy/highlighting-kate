@@ -1,4 +1,4 @@
-Name:                highlighting-kate-lucid
+Name:                highlighting-kate
 Version:             0.5.11.1
 Cabal-Version:       >= 1.10
 Build-Type:          Simple
@@ -90,6 +90,9 @@ Flag executable
 Flag pcre-light
   Description:       Use the pcre-light library instead of regex-pcre-builtin
   Default:           False
+Flag lucid
+  Description:       Use the lucid library instead of blaze-html
+  Default:           False
 
 Source-repository head
   type:          git
@@ -105,13 +108,22 @@ Library
     cpp-options:     -D_PCRE_LIGHT
   else
     Build-depends:   regex-pcre-builtin >= 0.94.4.8.8.35
-  Build-Depends:     parsec, mtl, utf8-string, lucid >= 2.6 && < 2.7, text
+  if flag(lucid)
+    Build-depends:   lucid >= 2.6 && < 2.7, text
+    cpp-options:     -D_LUCID
+  else
+    Build-depends:   blaze-html >= 0.4.2 && < 0.8
+  Build-Depends:     parsec, mtl, utf8-string
   Exposed-Modules:   Text.Highlighting.Kate
                      Text.Highlighting.Kate.Syntax
                      Text.Highlighting.Kate.Types
                      Text.Highlighting.Kate.Styles
                      Text.Highlighting.Kate.Format.HTML
                      Text.Highlighting.Kate.Format.LaTeX
+  if flag(lucid)
+    Other-Modules:     Text.Highlighting.Kate.Format.HTML.Lucid
+  else
+    Other-Modules:     Text.Highlighting.Kate.Format.HTML.Blaze
   Other-Modules:     Text.Highlighting.Kate.Common
                      Paths_highlighting_kate
                      Text.Highlighting.Kate.Syntax.Abc
@@ -241,8 +253,12 @@ Library
 
 Executable Highlight
   Main-Is:          Highlight.hs
-  Build-Depends:    base, containers, filepath, lucid >= 2.6 && < 2.7,
-                    highlighting-kate-lucid
+  if flag(lucid)
+    Build-depends:   lucid >= 2.6 && < 2.7, text
+  else
+    Build-depends:   blaze-html >= 0.4.2 && < 0.8
+  Build-Depends:    base, containers, filepath,
+                    highlighting-kate
   Hs-Source-Dirs:   extra
   Default-Language:    Haskell98
   if flag(pcre-light)
@@ -262,6 +278,11 @@ test-suite test-highlighting-kate
   Type:           exitcode-stdio-1.0
   Main-Is:        test-highlighting-kate.hs
   Hs-Source-Dirs: tests
-  build-depends:  base >= 4, directory, highlighting-kate-lucid, filepath,
-                  process, Diff, containers, lucid >= 2.6 && < 2.7, text
+  if flag(lucid)
+    Build-depends:   lucid >= 2.6 && < 2.7, text
+    cpp-options:     -D_LUCID
+  else
+    Build-depends:   blaze-html >= 0.4.2 && < 0.8
+  build-depends:  base >= 4, directory, highlighting-kate, filepath,
+                  process, Diff, containers
   default-language: Haskell98
