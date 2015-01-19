@@ -1,4 +1,4 @@
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+<head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
@@ -15,24 +15,24 @@ code > span.ot { color: #007020; }
 code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
-</style></head><body><pre class="sourceCode"><code class="sourceCode"><span class="kw" title="KeywordTok">package</span> <span class="ot" title="OtherTok">require</span> Tcl <span class="fl" title="FloatTok">8.6</span>
+</style></head><body><pre class="sourceCode"><code class="sourceCode"><span title="KeywordTok" class="kw">package</span> <span title="OtherTok" class="ot">require</span> Tcl <span title="FloatTok" class="fl">8.6</span>
 
-<span class="kw" title="KeywordTok">proc</span> abc <span class="kw" title="KeywordTok">{</span>word <span class="kw" title="KeywordTok">{</span>blocks <span class="kw" title="KeywordTok">{</span>BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM<span class="kw" title="KeywordTok">}}}</span> <span class="kw" title="KeywordTok">{</span>
-    <span class="kw" title="KeywordTok">set</span> abc <span class="kw" title="KeywordTok">{{</span>letters blocks abc<span class="kw" title="KeywordTok">}</span> <span class="kw" title="KeywordTok">{</span>
-        <span class="kw" title="KeywordTok">set</span> rest <span class="kw" title="KeywordTok">[lassign</span> <span class="dt" title="DataTypeTok">$letters</span> ch<span class="kw" title="KeywordTok">]</span>
-        <span class="kw" title="KeywordTok">set</span> i <span class="dv" title="DecValTok">0</span>
-        <span class="kw" title="KeywordTok">foreach</span> blk <span class="dt" title="DataTypeTok">$blocks</span> <span class="kw" title="KeywordTok">{</span>
-            <span class="kw" title="KeywordTok">if</span> <span class="kw" title="KeywordTok">{</span><span class="dt" title="DataTypeTok">$ch</span> in <span class="dt" title="DataTypeTok">$blk</span> &amp;&amp; (!<span class="kw" title="KeywordTok">[llength</span> <span class="dt" title="DataTypeTok">$rest</span><span class="kw" title="KeywordTok">]</span>
-                    || <span class="kw" title="KeywordTok">[</span>apply <span class="dt" title="DataTypeTok">$abc</span> <span class="dt" title="DataTypeTok">$rest</span> <span class="kw" title="KeywordTok">[lreplace</span> <span class="dt" title="DataTypeTok">$blocks</span> <span class="dt" title="DataTypeTok">$i</span> <span class="dt" title="DataTypeTok">$i</span><span class="kw" title="KeywordTok">]</span> <span class="dt" title="DataTypeTok">$abc</span><span class="kw" title="KeywordTok">]</span>)<span class="kw" title="KeywordTok">}</span> <span class="kw" title="KeywordTok">{</span>
-                <span class="kw" title="KeywordTok">return</span> true
-            <span class="kw" title="KeywordTok">}</span>
-            <span class="kw" title="KeywordTok">incr</span> i
-        <span class="kw" title="KeywordTok">}</span>
-        <span class="kw" title="KeywordTok">return</span> false
-    <span class="kw" title="KeywordTok">}}</span>
-    <span class="kw" title="KeywordTok">return</span> <span class="kw" title="KeywordTok">[</span>apply <span class="dt" title="DataTypeTok">$abc</span> <span class="kw" title="KeywordTok">[split</span> <span class="dt" title="DataTypeTok">$word</span> <span class="st" title="StringTok">&quot;&quot;</span><span class="kw" title="KeywordTok">]</span> <span class="kw" title="KeywordTok">[</span>lmap b <span class="dt" title="DataTypeTok">$blocks</span> <span class="kw" title="KeywordTok">{split</span> <span class="dt" title="DataTypeTok">$b</span> <span class="st" title="StringTok">&quot;&quot;</span><span class="kw" title="KeywordTok">}]</span> <span class="dt" title="DataTypeTok">$abc</span><span class="kw" title="KeywordTok">]</span>
-<span class="kw" title="KeywordTok">}</span>
+<span title="KeywordTok" class="kw">proc</span> abc <span title="KeywordTok" class="kw">{</span>word <span title="KeywordTok" class="kw">{</span>blocks <span title="KeywordTok" class="kw">{</span>BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM<span title="KeywordTok" class="kw">}}}</span> <span title="KeywordTok" class="kw">{</span>
+    <span title="KeywordTok" class="kw">set</span> abc <span title="KeywordTok" class="kw">{{</span>letters blocks abc<span title="KeywordTok" class="kw">}</span> <span title="KeywordTok" class="kw">{</span>
+        <span title="KeywordTok" class="kw">set</span> rest <span title="KeywordTok" class="kw">[lassign</span> <span title="DataTypeTok" class="dt">$letters</span> ch<span title="KeywordTok" class="kw">]</span>
+        <span title="KeywordTok" class="kw">set</span> i <span title="DecValTok" class="dv">0</span>
+        <span title="KeywordTok" class="kw">foreach</span> blk <span title="DataTypeTok" class="dt">$blocks</span> <span title="KeywordTok" class="kw">{</span>
+            <span title="KeywordTok" class="kw">if</span> <span title="KeywordTok" class="kw">{</span><span title="DataTypeTok" class="dt">$ch</span> in <span title="DataTypeTok" class="dt">$blk</span> &amp;&amp; (!<span title="KeywordTok" class="kw">[llength</span> <span title="DataTypeTok" class="dt">$rest</span><span title="KeywordTok" class="kw">]</span>
+                    || <span title="KeywordTok" class="kw">[</span>apply <span title="DataTypeTok" class="dt">$abc</span> <span title="DataTypeTok" class="dt">$rest</span> <span title="KeywordTok" class="kw">[lreplace</span> <span title="DataTypeTok" class="dt">$blocks</span> <span title="DataTypeTok" class="dt">$i</span> <span title="DataTypeTok" class="dt">$i</span><span title="KeywordTok" class="kw">]</span> <span title="DataTypeTok" class="dt">$abc</span><span title="KeywordTok" class="kw">]</span>)<span title="KeywordTok" class="kw">}</span> <span title="KeywordTok" class="kw">{</span>
+                <span title="KeywordTok" class="kw">return</span> true
+            <span title="KeywordTok" class="kw">}</span>
+            <span title="KeywordTok" class="kw">incr</span> i
+        <span title="KeywordTok" class="kw">}</span>
+        <span title="KeywordTok" class="kw">return</span> false
+    <span title="KeywordTok" class="kw">}}</span>
+    <span title="KeywordTok" class="kw">return</span> <span title="KeywordTok" class="kw">[</span>apply <span title="DataTypeTok" class="dt">$abc</span> <span title="KeywordTok" class="kw">[split</span> <span title="DataTypeTok" class="dt">$word</span> <span title="StringTok" class="st">&quot;&quot;</span><span title="KeywordTok" class="kw">]</span> <span title="KeywordTok" class="kw">[</span>lmap b <span title="DataTypeTok" class="dt">$blocks</span> <span title="KeywordTok" class="kw">{split</span> <span title="DataTypeTok" class="dt">$b</span> <span title="StringTok" class="st">&quot;&quot;</span><span title="KeywordTok" class="kw">}]</span> <span title="DataTypeTok" class="dt">$abc</span><span title="KeywordTok" class="kw">]</span>
+<span title="KeywordTok" class="kw">}</span>
 
-<span class="kw" title="KeywordTok">foreach</span> word <span class="kw" title="KeywordTok">{</span><span class="st" title="StringTok">&quot;&quot;</span> A BARK BOOK TREAT COMMON SQUAD CONFUSE<span class="kw" title="KeywordTok">}</span> <span class="kw" title="KeywordTok">{</span>
-    <span class="kw" title="KeywordTok">puts</span> <span class="kw" title="KeywordTok">[format</span> <span class="st" title="StringTok">&quot;Can we spell %9s? %s&quot;</span> &#39;<span class="dt" title="DataTypeTok">$word</span>&#39; <span class="kw" title="KeywordTok">[</span>abc <span class="dt" title="DataTypeTok">$word</span><span class="kw" title="KeywordTok">]]</span>
-<span class="kw" title="KeywordTok">}</span></code></pre></body>
+<span title="KeywordTok" class="kw">foreach</span> word <span title="KeywordTok" class="kw">{</span><span title="StringTok" class="st">&quot;&quot;</span> A BARK BOOK TREAT COMMON SQUAD CONFUSE<span title="KeywordTok" class="kw">}</span> <span title="KeywordTok" class="kw">{</span>
+    <span title="KeywordTok" class="kw">puts</span> <span title="KeywordTok" class="kw">[format</span> <span title="StringTok" class="st">&quot;Can we spell %9s? %s&quot;</span> &#39;<span title="DataTypeTok" class="dt">$word</span>&#39; <span title="KeywordTok" class="kw">[</span>abc <span title="DataTypeTok" class="dt">$word</span><span title="KeywordTok" class="kw">]]</span>
+<span title="KeywordTok" class="kw">}</span></code></pre></body>

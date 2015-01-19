@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
 {- |
    Module      : Text.Highlighting.Kate.Format.HTML
    Copyright   : Copyright (C) 2008-2011 John MacFarlane
@@ -15,15 +15,10 @@ module Text.Highlighting.Kate.Format.HTML (
       formatHtmlInline, formatHtmlBlock, styleToCss
    ) where
 import Text.Highlighting.Kate.Types
-#if MIN_VERSION_blaze_html(0,5,0)
-import Text.Blaze.Html
-#else
-import Text.Blaze
-#endif
-import qualified Text.Blaze.Html5 as H
-import qualified Text.Blaze.Html5.Attributes as A
+import Lucid
 import Data.Monoid
 import Data.List (intersperse)
+import qualified Data.Text as T
 
 -- | Format tokens using HTML spans inside @code@ tags. For example,
 -- A @KeywordTok@ is rendered as a span with class @kw@.
@@ -34,21 +29,20 @@ import Data.List (intersperse)
 -- 'OtherTok' = @ot@, 'AlertTok' = @al@, 'FunctionTok' = @fu@,
 -- 'RegionMarkerTok' = @re@, 'ErrorTok' = @er@. A 'NormalTok'
 -- is not marked up at all.
-formatHtmlInline :: FormatOptions -> [SourceLine] -> Html
-formatHtmlInline opts = (H.code ! A.class_ (toValue $ unwords
-                                                    $ "sourceCode" : codeClasses opts))
-                                . mconcat . intersperse (toHtml "\n")
+formatHtmlInline :: FormatOptions -> [SourceLine] -> Html ()
+formatHtmlInline opts = code_ [ class_ (T.pack $ unwords $ "sourceCode" : codeClasses opts)]
+                                . mconcat . intersperse (toHtml ("\n" :: T.Text))
                                 . map (sourceLineToHtml opts)
 
-tokenToHtml :: FormatOptions -> Token -> Html
+tokenToHtml :: FormatOptions -> Token -> Html ()
 tokenToHtml _ (NormalTok, txt)  = toHtml txt
 tokenToHtml opts (toktype, txt) =
   if titleAttributes opts
-     then sp ! A.title (toValue $ show toktype)
+     then with sp [title_ (T.pack $ show toktype)]
      else sp
-   where sp = H.span ! A.class_ (toValue $ short toktype) $ toHtml txt
+   where sp = span_ [ class_ (short toktype)] $ toHtml txt
 
-short :: TokenType -> String
+short :: TokenType -> T.Text
 short KeywordTok        = "kw"
 short DataTypeTok       = "dt"
 short DecValTok         = "dv"
@@ -64,35 +58,34 @@ short RegionMarkerTok   = "re"
 short ErrorTok          = "er"
 short NormalTok         = ""
 
-sourceLineToHtml :: FormatOptions -> SourceLine -> Html
+sourceLineToHtml :: FormatOptions -> SourceLine -> Html ()
 sourceLineToHtml opts contents = mapM_ (tokenToHtml opts) contents
 
-formatHtmlBlockPre :: FormatOptions -> [SourceLine] -> Html
-formatHtmlBlockPre opts = H.pre . formatHtmlInline opts
+formatHtmlBlockPre :: FormatOptions -> [SourceLine] -> Html ()
+formatHtmlBlockPre opts = pre_ . formatHtmlInline opts
 
 -- | Format tokens as an HTML @pre@ block. If line numbering is
 -- selected, this is put into a table row with line numbers in the
 -- left cell.
-formatHtmlBlock :: FormatOptions -> [SourceLine] -> Html
-formatHtmlBlock opts ls = container ! A.class_ (toValue $ unwords classes)
+formatHtmlBlock :: FormatOptions -> [SourceLine] -> Html ()
+formatHtmlBlock opts ls = with container [ class_ (T.pack $ unwords classes) ]
   where  container = if numberLines opts
-                        then H.table $ H.tr ! A.class_ sourceCode
+                        then table_ $ tr_ [ class_ "sourceCode" ]
                                      $ nums >> source
                         else pre
-         sourceCode = toValue "sourceCode"
          classes = "sourceCode" :
                    [x | x <- containerClasses opts, x /= "sourceCode"]
          pre = formatHtmlBlockPre opts ls
-         source = H.td ! A.class_ sourceCode $ pre
+         source = td_ [ class_ "sourceCode" ] $ pre
          startNum = startNumber opts
-         nums = H.td ! A.class_ (toValue "lineNumbers")
-                     $ H.pre
+         nums = td_  [ class_ "lineNumbers" ]
+                     $ pre_
                      $ mapM_ lineNum [startNum..(startNum + length ls - 1)]
          lineNum n = if lineAnchors opts
-                        then (H.a ! A.id (toValue nStr) ! A.href (toValue $ "#" ++ nStr) $ toHtml $ show n)
-                              >> toHtml "\n"
-                        else toHtml $ show n ++ "\n"
-           where nStr = show n
+                        then (a_ [ id_ nStr , href_ ("#" `mappend` nStr) ] $ toHtml $ show n)
+                              >> toHtml ("\n" :: T.Text)
+                        else toHtml $ show n `mappend` "\n"
+           where nStr = T.pack $ show n
 -- | Returns CSS for styling highlighted code according to the given style.
 styleToCss :: Style -> String
 styleToCss f = unlines $ tablespec ++ colorspec ++ map toCss (tokenStyles f)
@@ -118,7 +111,7 @@ styleToCss f = unlines $ tablespec ++ colorspec ++ map toCss (tokenStyles f)
           ]
 
 toCss :: (TokenType, TokenStyle) -> String
-toCss (t,tf) = "code > span." ++ short t ++ " { "
+toCss (t,tf) = "code > span." ++ T.unpack (short t) ++ " { "
                 ++ colorspec ++ backgroundspec ++ weightspec ++ stylespec
                 ++ decorationspec ++ "}"
   where colorspec = maybe "" (\col -> "color: " ++ fromColor col ++ "; ") $ tokenColor tf

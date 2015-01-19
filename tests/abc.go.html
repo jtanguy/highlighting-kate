@@ -1,4 +1,4 @@
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+<head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
@@ -15,42 +15,42 @@ code > span.ot { color: #007020; }
 code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
-</style></head><body><pre class="sourceCode"><code class="sourceCode"><span class="kw" title="KeywordTok">package</span> main
+</style></head><body><pre class="sourceCode"><code class="sourceCode"><span title="KeywordTok" class="kw">package</span> main
 
-<span class="kw" title="KeywordTok">import</span> (
-        <span class="st" title="StringTok">&quot;fmt&quot;</span>
-        <span class="st" title="StringTok">&quot;strings&quot;</span>
+<span title="KeywordTok" class="kw">import</span> (
+        <span title="StringTok" class="st">&quot;fmt&quot;</span>
+        <span title="StringTok" class="st">&quot;strings&quot;</span>
 )
 
-<span class="kw" title="KeywordTok">func</span> newSpeller(blocks <span class="dt" title="DataTypeTok">string</span>) <span class="kw" title="KeywordTok">func</span>(<span class="dt" title="DataTypeTok">string</span>) <span class="dt" title="DataTypeTok">bool</span> {
+<span title="KeywordTok" class="kw">func</span> newSpeller(blocks <span title="DataTypeTok" class="dt">string</span>) <span title="KeywordTok" class="kw">func</span>(<span title="DataTypeTok" class="dt">string</span>) <span title="DataTypeTok" class="dt">bool</span> {
         bl := strings.Fields(blocks)
-        <span class="kw" title="KeywordTok">return</span> <span class="kw" title="KeywordTok">func</span>(word <span class="dt" title="DataTypeTok">string</span>) <span class="dt" title="DataTypeTok">bool</span> {
-                <span class="kw" title="KeywordTok">return</span> r(word, bl)
+        <span title="KeywordTok" class="kw">return</span> <span title="KeywordTok" class="kw">func</span>(word <span title="DataTypeTok" class="dt">string</span>) <span title="DataTypeTok" class="dt">bool</span> {
+                <span title="KeywordTok" class="kw">return</span> r(word, bl)
         }
 }
 
-<span class="kw" title="KeywordTok">func</span> r(word <span class="dt" title="DataTypeTok">string</span>, bl []<span class="dt" title="DataTypeTok">string</span>) <span class="dt" title="DataTypeTok">bool</span> {
-        <span class="kw" title="KeywordTok">if</span> word == <span class="st" title="StringTok">&quot;&quot;</span> {
-                <span class="kw" title="KeywordTok">return</span> <span class="ot" title="OtherTok">true</span>
+<span title="KeywordTok" class="kw">func</span> r(word <span title="DataTypeTok" class="dt">string</span>, bl []<span title="DataTypeTok" class="dt">string</span>) <span title="DataTypeTok" class="dt">bool</span> {
+        <span title="KeywordTok" class="kw">if</span> word == <span title="StringTok" class="st">&quot;&quot;</span> {
+                <span title="KeywordTok" class="kw">return</span> <span title="OtherTok" class="ot">true</span>
         }
-        c := word[<span class="dv" title="DecValTok">0</span>] | <span class="dv" title="DecValTok">32</span>
-        <span class="kw" title="KeywordTok">for</span> i, b := <span class="kw" title="KeywordTok">range</span> bl {
-                <span class="kw" title="KeywordTok">if</span> c == b[<span class="dv" title="DecValTok">0</span>]|<span class="dv" title="DecValTok">32</span> || c == b[<span class="dv" title="DecValTok">1</span>]|<span class="dv" title="DecValTok">32</span> {
-                        bl[i], bl[<span class="dv" title="DecValTok">0</span>] = bl[<span class="dv" title="DecValTok">0</span>], b
-                        <span class="kw" title="KeywordTok">if</span> r(word[<span class="dv" title="DecValTok">1</span>:], bl[<span class="dv" title="DecValTok">1</span>:]) == <span class="ot" title="OtherTok">true</span> {
-                                <span class="kw" title="KeywordTok">return</span> <span class="ot" title="OtherTok">true</span>
+        c := word[<span title="DecValTok" class="dv">0</span>] | <span title="DecValTok" class="dv">32</span>
+        <span title="KeywordTok" class="kw">for</span> i, b := <span title="KeywordTok" class="kw">range</span> bl {
+                <span title="KeywordTok" class="kw">if</span> c == b[<span title="DecValTok" class="dv">0</span>]|<span title="DecValTok" class="dv">32</span> || c == b[<span title="DecValTok" class="dv">1</span>]|<span title="DecValTok" class="dv">32</span> {
+                        bl[i], bl[<span title="DecValTok" class="dv">0</span>] = bl[<span title="DecValTok" class="dv">0</span>], b
+                        <span title="KeywordTok" class="kw">if</span> r(word[<span title="DecValTok" class="dv">1</span>:], bl[<span title="DecValTok" class="dv">1</span>:]) == <span title="OtherTok" class="ot">true</span> {
+                                <span title="KeywordTok" class="kw">return</span> <span title="OtherTok" class="ot">true</span>
                         }
-                        bl[i], bl[<span class="dv" title="DecValTok">0</span>] = bl[<span class="dv" title="DecValTok">0</span>], bl[i]
+                        bl[i], bl[<span title="DecValTok" class="dv">0</span>] = bl[<span title="DecValTok" class="dv">0</span>], bl[i]
                 }
         }
-        <span class="kw" title="KeywordTok">return</span> <span class="ot" title="OtherTok">false</span>
+        <span title="KeywordTok" class="kw">return</span> <span title="OtherTok" class="ot">false</span>
 }
 
-<span class="kw" title="KeywordTok">func</span> main() {
+<span title="KeywordTok" class="kw">func</span> main() {
         sp := newSpeller(
-                <span class="st" title="StringTok">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span>)
-        <span class="kw" title="KeywordTok">for</span> _, word := <span class="kw" title="KeywordTok">range</span> []<span class="dt" title="DataTypeTok">string</span>{
-                <span class="st" title="StringTok">&quot;A&quot;</span>, <span class="st" title="StringTok">&quot;BARK&quot;</span>, <span class="st" title="StringTok">&quot;BOOK&quot;</span>, <span class="st" title="StringTok">&quot;TREAT&quot;</span>, <span class="st" title="StringTok">&quot;COMMON&quot;</span>, <span class="st" title="StringTok">&quot;SQUAD&quot;</span>, <span class="st" title="StringTok">&quot;CONFUSE&quot;</span>} {
+                <span title="StringTok" class="st">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span>)
+        <span title="KeywordTok" class="kw">for</span> _, word := <span title="KeywordTok" class="kw">range</span> []<span title="DataTypeTok" class="dt">string</span>{
+                <span title="StringTok" class="st">&quot;A&quot;</span>, <span title="StringTok" class="st">&quot;BARK&quot;</span>, <span title="StringTok" class="st">&quot;BOOK&quot;</span>, <span title="StringTok" class="st">&quot;TREAT&quot;</span>, <span title="StringTok" class="st">&quot;COMMON&quot;</span>, <span title="StringTok" class="st">&quot;SQUAD&quot;</span>, <span title="StringTok" class="st">&quot;CONFUSE&quot;</span>} {
                 fmt.Println(word, sp(word))
         }
 }</code></pre></body>
