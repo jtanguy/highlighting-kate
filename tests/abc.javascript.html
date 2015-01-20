@@ -1,4 +1,4 @@
-<head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
@@ -15,36 +15,36 @@ code > span.ot { color: #007020; }
 code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
-</style></head><body><pre class="sourceCode"><code class="sourceCode"><span title="KeywordTok" class="kw">let</span> characters = <span title="StringTok" class="st">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span>;
-<span title="KeywordTok" class="kw">let</span> blocks = <span title="OtherTok" class="ot">characters</span>.<span title="FunctionTok" class="fu">split</span>(<span title="StringTok" class="st">&quot; &quot;</span>).<span title="FunctionTok" class="fu">map</span>(pair =&gt; <span title="OtherTok" class="ot">pair</span>.<span title="FunctionTok" class="fu">split</span>(<span title="StringTok" class="st">&quot;&quot;</span>));
+</style></head><body><pre class="sourceCode"><code class="sourceCode"><span class="kw" title="KeywordTok">let</span> characters = <span class="st" title="StringTok">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span>;
+<span class="kw" title="KeywordTok">let</span> blocks = <span class="ot" title="OtherTok">characters</span>.<span class="fu" title="FunctionTok">split</span>(<span class="st" title="StringTok">&quot; &quot;</span>).<span class="fu" title="FunctionTok">map</span>(pair =&gt; <span class="ot" title="OtherTok">pair</span>.<span class="fu" title="FunctionTok">split</span>(<span class="st" title="StringTok">&quot;&quot;</span>));
  
-<span title="KeywordTok" class="kw">function</span> <span title="FunctionTok" class="fu">isWordPossible</span>(word) {
-  <span title="KeywordTok" class="kw">var</span> letters = [...<span title="OtherTok" class="ot">word</span>.<span title="FunctionTok" class="fu">toUpperCase</span>()];
-  <span title="KeywordTok" class="kw">var</span> length = <span title="OtherTok" class="ot">letters</span>.<span title="FunctionTok" class="fu">length</span>;
-  <span title="KeywordTok" class="kw">var</span> copy = <span title="KeywordTok" class="kw">new</span> <span title="FunctionTok" class="fu">Set</span>(blocks);
+<span class="kw" title="KeywordTok">function</span> <span class="fu" title="FunctionTok">isWordPossible</span>(word) {
+  <span class="kw" title="KeywordTok">var</span> letters = [...<span class="ot" title="OtherTok">word</span>.<span class="fu" title="FunctionTok">toUpperCase</span>()];
+  <span class="kw" title="KeywordTok">var</span> length = <span class="ot" title="OtherTok">letters</span>.<span class="fu" title="FunctionTok">length</span>;
+  <span class="kw" title="KeywordTok">var</span> copy = <span class="kw" title="KeywordTok">new</span> <span class="fu" title="FunctionTok">Set</span>(blocks);
 
-  <span title="KeywordTok" class="kw">for</span> (<span title="KeywordTok" class="kw">let</span> letter of letters) {
-    <span title="KeywordTok" class="kw">for</span> (<span title="KeywordTok" class="kw">let</span> block of copy) {
-      <span title="KeywordTok" class="kw">let</span> index = <span title="OtherTok" class="ot">block</span>.<span title="FunctionTok" class="fu">indexOf</span>(letter);
+  <span class="kw" title="KeywordTok">for</span> (<span class="kw" title="KeywordTok">let</span> letter of letters) {
+    <span class="kw" title="KeywordTok">for</span> (<span class="kw" title="KeywordTok">let</span> block of copy) {
+      <span class="kw" title="KeywordTok">let</span> index = <span class="ot" title="OtherTok">block</span>.<span class="fu" title="FunctionTok">indexOf</span>(letter);
  
-      <span title="KeywordTok" class="kw">if</span> (index !== -<span title="DecValTok" class="dv">1</span>) {
+      <span class="kw" title="KeywordTok">if</span> (index !== -<span class="dv" title="DecValTok">1</span>) {
         length--;
-        <span title="OtherTok" class="ot">copy</span>.<span title="FunctionTok" class="fu">delete</span>(block);
-        <span title="KeywordTok" class="kw">break</span>;  
+        <span class="ot" title="OtherTok">copy</span>.<span class="fu" title="FunctionTok">delete</span>(block);
+        <span class="kw" title="KeywordTok">break</span>;  
       }
     }
 
   }
-  <span title="KeywordTok" class="kw">return</span> !length;
+  <span class="kw" title="KeywordTok">return</span> !length;
 }    
  
 [ 
-  <span title="StringTok" class="st">&quot;A&quot;</span>, 
-  <span title="StringTok" class="st">&quot;BARK&quot;</span>, 
-  <span title="StringTok" class="st">&quot;BOOK&quot;</span>, 
-  <span title="StringTok" class="st">&quot;TREAT&quot;</span>, 
-  <span title="StringTok" class="st">&quot;COMMON&quot;</span>, 
-  <span title="StringTok" class="st">&quot;SQUAD&quot;</span>, 
-  <span title="StringTok" class="st">&quot;CONFUSE&quot;</span> 
-].<span title="FunctionTok" class="fu">forEach</span>(word =&gt; <span title="OtherTok" class="ot">console</span>.<span title="FunctionTok" class="fu">log</span>(`${word}: ${<span title="FunctionTok" class="fu">isWordPossible</span>(word)}`));
+  <span class="st" title="StringTok">&quot;A&quot;</span>, 
+  <span class="st" title="StringTok">&quot;BARK&quot;</span>, 
+  <span class="st" title="StringTok">&quot;BOOK&quot;</span>, 
+  <span class="st" title="StringTok">&quot;TREAT&quot;</span>, 
+  <span class="st" title="StringTok">&quot;COMMON&quot;</span>, 
+  <span class="st" title="StringTok">&quot;SQUAD&quot;</span>, 
+  <span class="st" title="StringTok">&quot;CONFUSE&quot;</span> 
+].<span class="fu" title="FunctionTok">forEach</span>(word =&gt; <span class="ot" title="OtherTok">console</span>.<span class="fu" title="FunctionTok">log</span>(`${word}: ${<span class="fu" title="FunctionTok">isWordPossible</span>(word)}`));
 </code></pre></body>

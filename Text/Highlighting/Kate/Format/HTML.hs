@@ -9,13 +9,10 @@
    Portability : portable
 
 Formatters that convert a list of annotated source lines to HTML.
+This module only reexports the 'Text.Highlighting.Kate.Format.HTML.Blaze' module
 -}
 
 module Text.Highlighting.Kate.Format.HTML (
-      formatHtmlInline, formatHtmlBlock, styleToCss
+    module Text.Highlighting.Kate.Format.HTML.Blaze
    ) where
-#ifdef _LUCID
-import Text.Highlighting.Kate.Format.HTML.Lucid
-#else
 import Text.Highlighting.Kate.Format.HTML.Blaze
-#endif

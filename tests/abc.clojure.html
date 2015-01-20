@@ -1,4 +1,4 @@
-<head><meta content="text/html; charset=UTF-8" http-equiv="Content-Type"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
@@ -16,24 +16,24 @@ code > span.al { color: #ff0000; font-weight: bold; }
 code > span.fu { color: #06287e; }
 code > span.er { color: #ff0000; font-weight: bold; }
 </style></head><body><pre class="sourceCode"><code class="sourceCode">
-(<span title="KeywordTok" class="kw">def</span><span title="FunctionTok" class="fu"> blocks</span>
-  (<span title="KeywordTok" class="kw">-&gt;</span> <span title="StringTok" class="st">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span> (.split <span title="StringTok" class="st">&quot; &quot;</span>) <span title="KeywordTok" class="kw">vec</span>))
+(<span class="kw" title="KeywordTok">def</span><span class="fu" title="FunctionTok"> blocks</span>
+  (<span class="kw" title="KeywordTok">-&gt;</span> <span class="st" title="StringTok">&quot;BO XK DQ CP NA GT RE TG QD FS JW HU VI AN OB ER FS LY PC ZM&quot;</span> (.split <span class="st" title="StringTok">&quot; &quot;</span>) <span class="kw" title="KeywordTok">vec</span>))
 
-(<span title="KeywordTok" class="kw">defn</span><span title="FunctionTok" class="fu"> omit </span>
-  <span title="StringTok" class="st">&quot;return bs with (one instance of) b omitted&quot;</span>
+(<span class="kw" title="KeywordTok">defn</span><span class="fu" title="FunctionTok"> omit </span>
+  <span class="st" title="StringTok">&quot;return bs with (one instance of) b omitted&quot;</span>
   [bs b] 
-  (<span title="KeywordTok" class="kw">let</span> [[before after] (<span title="KeywordTok" class="kw">split-with</span> #(<span title="KeywordTok" class="kw">not=</span> b %) bs)]
-    (<span title="KeywordTok" class="kw">concat</span> before (<span title="KeywordTok" class="kw">rest</span> after))))
+  (<span class="kw" title="KeywordTok">let</span> [[before after] (<span class="kw" title="KeywordTok">split-with</span> #(<span class="kw" title="KeywordTok">not=</span> b %) bs)]
+    (<span class="kw" title="KeywordTok">concat</span> before (<span class="kw" title="KeywordTok">rest</span> after))))
 
-(<span title="KeywordTok" class="kw">defn</span><span title="FunctionTok" class="fu"> abc </span>
-  <span title="StringTok" class="st">&quot;return lazy sequence of solutions (i.e. block lists)&quot;</span>
+(<span class="kw" title="KeywordTok">defn</span><span class="fu" title="FunctionTok"> abc </span>
+  <span class="st" title="StringTok">&quot;return lazy sequence of solutions (i.e. block lists)&quot;</span>
   [blocks [c &amp; cs]]
   (if-some c
-    (<span title="KeywordTok" class="kw">for</span> [b blocks <span title="KeywordTok" class="kw">:when</span> (<span title="KeywordTok" class="kw">some</span> #(<span title="KeywordTok" class="kw">=</span> c %) b)
+    (<span class="kw" title="KeywordTok">for</span> [b blocks <span class="kw" title="KeywordTok">:when</span> (<span class="kw" title="KeywordTok">some</span> #(<span class="kw" title="KeywordTok">=</span> c %) b)
           bs (abc (omit blocks b) cs)]
-      (<span title="KeywordTok" class="kw">cons</span> b bs))
+      (<span class="kw" title="KeywordTok">cons</span> b bs))
     [[]]))
     
       
-(<span title="KeywordTok" class="kw">doseq</span> [word [<span title="StringTok" class="st">&quot;A&quot;</span> <span title="StringTok" class="st">&quot;BARK&quot;</span> <span title="StringTok" class="st">&quot;Book&quot;</span> <span title="StringTok" class="st">&quot;treat&quot;</span> <span title="StringTok" class="st">&quot;COMMON&quot;</span> <span title="StringTok" class="st">&quot;SQUAD&quot;</span> <span title="StringTok" class="st">&quot;CONFUSE&quot;</span>]]
-  (<span title="KeywordTok" class="kw">-&gt;&gt;</span> word .toUpperCase (abc blocks) <span title="KeywordTok" class="kw">first</span> (<span title="KeywordTok" class="kw">printf</span> <span title="StringTok" class="st">&quot;%s: %b</span>\n<span title="StringTok" class="st">&quot;</span> word)))</code></pre></body>
+(<span class="kw" title="KeywordTok">doseq</span> [word [<span class="st" title="StringTok">&quot;A&quot;</span> <span class="st" title="StringTok">&quot;BARK&quot;</span> <span class="st" title="StringTok">&quot;Book&quot;</span> <span class="st" title="StringTok">&quot;treat&quot;</span> <span class="st" title="StringTok">&quot;COMMON&quot;</span> <span class="st" title="StringTok">&quot;SQUAD&quot;</span> <span class="st" title="StringTok">&quot;CONFUSE&quot;</span>]]
+  (<span class="kw" title="KeywordTok">-&gt;&gt;</span> word .toUpperCase (abc blocks) <span class="kw" title="KeywordTok">first</span> (<span class="kw" title="KeywordTok">printf</span> <span class="st" title="StringTok">&quot;%s: %b</span>\n<span class="st" title="StringTok">&quot;</span> word)))</code></pre></body>

@@ -8,7 +8,8 @@
    Stability   : alpha
    Portability : portable
 
-Formatters that convert a list of annotated source lines to HTML.
+Formatter that convert a list of annotated source lines to HTML, using the
+'blaze-html' library.
 -}
 
 module Text.Highlighting.Kate.Format.HTML.Blaze (
